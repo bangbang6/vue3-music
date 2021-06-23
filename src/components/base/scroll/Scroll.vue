@@ -14,11 +14,16 @@ export default {
     click: {
       type: Boolean,
       default: true
+    },
+    probeType: {
+      type: Number,
+      default: 0
     }
   },
-  setup (props) {
+  emits: ['scroll'], //自定义事件 表示这个组件会向外派发这个事件
+  setup (props, { emit }) {
     const rootRef = ref(null)
-    useScroll(rootRef, props)
+    useScroll(rootRef, props, emit)
     return {
       rootRef
     }

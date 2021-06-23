@@ -19,6 +19,7 @@
 </template>
 
 <script>
+//轮播图组件
 import { ref } from '@vue/reactivity'
 import useSlider from './useSlider'
 export default {
