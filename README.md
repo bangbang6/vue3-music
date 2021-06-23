@@ -1,24 +1,10 @@
 # vue3-music
 
-## Project setup
-```
+## 运行过程
+
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 技术栈
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+vue3+项目复杂度较高
