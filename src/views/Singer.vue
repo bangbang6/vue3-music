@@ -1,0 +1,15 @@
+<template>
+  <div class="singer">singer</div>
+</template>
+ 
+<script>
+export default {
+  setup (props) {
+    return {
+    }
+  }
+}
+</script>
+ 
+<style lang="scss" scoped>
+</style>
