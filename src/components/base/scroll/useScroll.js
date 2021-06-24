@@ -18,6 +18,6 @@ export default function useScroll(wrapperRef,options,emit){
   onUnmounted(()=>{
     scroll.value.destroy()
   })
-  return scroll
+  return {scroll}
 }
 //!容器高度小于内容高度才能滚动 这个也是虚拟dom为什么有一个很高的div用来把内容高度高于容器高度 才能滚动

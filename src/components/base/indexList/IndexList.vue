@@ -14,6 +14,23 @@
     <div class="fixed" v-show="fixedTitle.length" :style="fixedStyle">
       <div class="fixed-title">{{fixedTitle}}</div>
     </div>
+    <div
+      class="shortcut"
+      @touchstart.stop.prevent="onShortcutTouchstart"
+      @touchmove.stop.prevent="onShortcutTouchmove"
+      @touchend.stop.prevent="onShortcutTouchend"
+    >
+      <!--  阻止冒泡 因为你也是在列表里面滑动 我们不能让列表滑动 -->
+      <ul>
+        <li
+          v-for="(item, index) in shortcutList"
+          :key="item"
+          :data-index="index"
+          class="item"
+          :class="{'current':currentIndex===index}"
+        >{{item}}</li>
+      </ul>
+    </div>
   </scroll>
 </template>
 
@@ -21,6 +38,7 @@
 //!歌手列表
 import Scroll from '@/components/base/scroll/Scroll'
 import useFixed from './useFixed'
+import { useShortCut } from './useShortCut'
 export default {
   name: 'index-list',
   components: { Scroll },
@@ -33,8 +51,10 @@ export default {
     }
   },
   setup (props) {
-    const { groupRef, onScroll, fixedTitle, fixedStyle } = useFixed(props) //固定标题相关的逻辑
-    return { groupRef, onScroll, fixedTitle, fixedStyle }
+    const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed(props) //固定标题相关的逻辑
+    //右侧快速入口的逻辑
+    const { shortcutList, scrollRef, onShortcutTouchstart, onShortcutTouchmove } = useShortCut(props, groupRef)
+    return { groupRef, onScroll, fixedTitle, fixedStyle, shortcutList, currentIndex, scrollRef, onShortcutTouchstart, onShortcutTouchmove }
   }
 }
 </script>
