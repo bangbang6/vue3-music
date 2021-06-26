@@ -4,7 +4,7 @@
       <li v-for="group in data" :key="group.title" class="group">
         <h2 class="title">{{group.title}}</h2>
         <ul>
-          <li v-for="item in group.list" :key="item.id" class="item">
+          <li v-for="item in group.list" :key="item.id" class="item" @click="e=>handleClick(item)">
             <img class="avatar" v-lazy="item.pic" />
             <span class="name">{{item.name}}</span>
           </li>
@@ -42,6 +42,7 @@ import { useShortCut } from './useShortCut'
 export default {
   name: 'index-list',
   components: { Scroll },
+  emits:['select'],//!这个组件有哪些自定义事件 因为都是一个组件
   props: {
     data: {
       type: Array,
@@ -50,11 +51,14 @@ export default {
       }
     }
   },
-  setup (props) {
+  setup (props, { emit }) {
     const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed(props) //固定标题相关的逻辑
     //右侧快速入口的逻辑
     const { shortcutList, scrollRef, onShortcutTouchstart, onShortcutTouchmove } = useShortCut(props, groupRef)
-    return { groupRef, onScroll, fixedTitle, fixedStyle, shortcutList, currentIndex, scrollRef, onShortcutTouchstart, onShortcutTouchmove }
+    function handleClick (item) {
+      emit('select',item)
+    }
+    return { groupRef, onScroll, fixedTitle, fixedStyle, shortcutList, currentIndex, scrollRef, onShortcutTouchstart, onShortcutTouchmove, handleClick }
   }
 }
 </script>
