@@ -1,7 +1,12 @@
 <template>
   <div class="singer" v-loading:[LoadingText]="!singers.length">
     <index-list :data="singers" @select="selectSinger"></index-list>
-    <router-view :singer="singer"></router-view>
+    <router-view v-slot="{ Component }">
+      <transition appear name="slide">
+        <!-- 实现路由切换的slide动画 -->
+        <component :is="Component" :singer="singer" />
+      </transition>
+    </router-view>
   </div>
 </template>
  

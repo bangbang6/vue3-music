@@ -1,6 +1,11 @@
 <template>
   <ul class="song-list">
-    <li class="item" v-for="(song, index) in songs" :key="song.id">
+    <li
+      class="item"
+      v-for="(song, index) in songs"
+      :key="song.id"
+      @click="e=>selectItem(song,index)"
+    >
       <div class="rank" v-if="rank">
         <span>{{ getRankText(index) }}</span>
       </div>
@@ -45,6 +50,7 @@ export default {
         return index + 1
       }
     }
+
   }
 }
 </script>

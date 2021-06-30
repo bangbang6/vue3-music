@@ -4,13 +4,13 @@
       <i class="icon-back"></i>
     </div>
     <h1 class="title">{{ title }}</h1>
-    <div class="bg-image" ref="bgImage" :style="bgImageStyle">
-      <!-- <div class="play-btn-wrapper">
-        <div v-show="songs.length > 0" class="play-btn">
+    <div class="bg-image" ref="bgImage" :style="bgImageStyle" @click="random">
+      <div class="play-btn-wrapper">
+        <div v-show="songs.length > 0" class="play-btn" :style="playBtnStyle">
           <i class="icon-play"></i>
           <span class="text">随机播放全部</span>
         </div>
-      </div>-->
+      </div>
       <div class="filter" :style="filterStyle"></div>
     </div>
     <scroll
@@ -18,10 +18,11 @@
       :probe-type="3"
       :style="scrollStyle"
       v-loading:[loadingText]="loading"
+      v-no-result:[resultText]="noResult"
       @scroll="onScroll"
     >
       <div class="song-list-wrapper">
-        <song-list :songs="songs"></song-list>
+        <song-list :songs="songs" @select="selectItem"></song-list>
       </div>
     </scroll>
   </div>
@@ -30,7 +31,7 @@
 <script>
 import SongList from '@/components/base/songList/SongList'
 import Scroll from '@/components/base/scroll/Scroll'
-
+import { mapActions } from 'vuex'
 //!这个组件是歌手歌曲列表和巅峰歌曲列表的基础组件
 export default {
   name: 'music-list',
@@ -60,6 +61,7 @@ export default {
       scrollY: 0,
       maxTranslateY: 0,
       loadingText: '晚风',
+      resultText: '晚风',
       maxScrollY: 160
     }
   },
@@ -95,6 +97,9 @@ export default {
         top: `${this.imageHeight}px`
       }
     },
+    noResult () {
+      return !this.loading && !this.songs.length
+    },
     filterStyle () {
       let blur = 0
       let scrollY = this.scrollY// !我们在计算属性里面用别的值得时候 我们要先用变量缓存以下this.scrollY 因为每次执行this.scrollY都会执行依赖收集得过程 而计算属性会变化很多次 所以性能不好
@@ -106,16 +111,32 @@ export default {
       return {
         backgroundFilter: `blur(${blur}px)`
       }
+    },
+    playBtnStyle () {
+      let display = ''
+      if (this.scrollY >= this.maxScrollY) {
+        display = 'none'
+      }
+      return {
+        display
+      }
     }
   },
   mounted () {
     this.imageHeight = this.$refs.bgImage.clientHeight // 动态获取图片高度 我们没有把图片高度自己设置死 而是完全采用线上图片多高 然后这里动态获取高度
   },
   methods: {
+    ...mapActions(['selectPlay', 'randomPlay']),
     onScroll (pos) {
 
       this.scrollY = -pos.y
       console.log('this.scrollY', this.scrollY);
+    },
+    selectItem ({ song, index }) {
+      this.selectPlay({ list: this.songs, index: index })
+    },
+    random () {
+      this.randomPlay({ list: this.songs })
     }
   }
 
