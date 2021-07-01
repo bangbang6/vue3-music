@@ -32,10 +32,10 @@ export default {
     }
   },
   watch: {
-    progress (newProgress) {
-      const barWidth = this.$el.clientWidth - progressBtnWidth //整个进度条的宽度 - 按钮的宽度
-      this.offset = barWidth * newProgress
-    }
+    progress: function (newProgress) {
+      this.setOffset(newProgress)
+    },
+
   },
   computed: {
     progressStyle () {
@@ -75,6 +75,10 @@ export default {
       const progress = offsetWidth / barWidth
       this.$emit('progress-changed', progress)
 
+    },
+    setOffset (progress) {
+      const barWidth = this.$el.clientWidth - progressBtnWidth //整个进度条的宽度 - 按钮的宽度
+      this.offset = barWidth * progress
     }
   }
 

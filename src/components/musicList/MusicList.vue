@@ -31,7 +31,7 @@
 <script>
 import SongList from '@/components/base/songList/SongList'
 import Scroll from '@/components/base/scroll/Scroll'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 //!这个组件是歌手歌曲列表和巅峰歌曲列表的基础组件
 export default {
   name: 'music-list',
@@ -93,8 +93,10 @@ export default {
       }
     },
     scrollStyle () {
+      const bottom = this.playlist.length ? '60px' : '0'
       return {
-        top: `${this.imageHeight}px`
+        top: `${this.imageHeight}px`,
+        bottom
       }
     },
     noResult () {
@@ -120,7 +122,9 @@ export default {
       return {
         display
       }
-    }
+    },
+    ...mapState(['playlist'])
+
   },
   mounted () {
     this.imageHeight = this.$refs.bgImage.clientHeight // 动态获取图片高度 我们没有把图片高度自己设置死 而是完全采用线上图片多高 然后这里动态获取高度
