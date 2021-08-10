@@ -5,13 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "npm run build &&  node backend/prod.server.js"
   },
   "dependencies": {
     "@better-scroll/core": "^2.2.1",
     "@better-scroll/observe-dom": "^2.4.0",
     "@better-scroll/slide": "^2.2.1",
     "axios": "^0.21.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
     "core-js": "^3.6.5",
     "create-keyframe-animation": "^0.1.0",
     "good-storage": "^1.1.1",
@@ -21,7 +24,8 @@
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vue3-lazy": "^1.0.0-alpha.1",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "xsrf": "^1.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
