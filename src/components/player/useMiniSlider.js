@@ -1,7 +1,7 @@
 import { computed, onMounted, ref, watch,nextTick, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import BScroll from '@better-scroll/core'
-import Slide from '@better-scroll/Slide'
+import Slide from '@better-scroll/slide'
 BScroll.use(Slide)
 export default function useMiniSlider(){
     const sliderWrapperRef = ref(null)
